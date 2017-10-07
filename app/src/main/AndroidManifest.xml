@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.example.subhankar29.in_out_hackathon"
+<manifest package="bpr10.git.voodosample1"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="adjustPan">
+        <activity android:name="bpr10.git.voodosample1.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <service android:name=".MyAccessibilityService">
+
+        <service
+            android:name="bpr10.git.voodosample1.MyAccessibilityService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
+                <action android:name="android.accessibilityservice.AccessibilityService"/>
             </intent-filter>
             <meta-data
-                android:name="android.accessibilityservice" android:resource="@xml/serviceconfig"/>
+                android:name="android.accessibilityservice"
+                android:resource="@xml/serviceconfig"/>
         </service>
-        <meta-data
-            android:name="com.google.android.gms.vision.DEPENDENCIES"
-            android:value="ocr"></meta-data>
     </application>
 
 </manifest>
