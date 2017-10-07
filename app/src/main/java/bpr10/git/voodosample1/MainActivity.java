@@ -76,11 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Pattern pattern = Pattern.compile("Pay");
     Matcher matcher = pattern.matcher(URL);
     if (matcher.find()) {
-      //Enter the payment method here..
-      Uri pp = Uri.parse("phonepe://pay?pmo=+9163506800&pn=Anand&am=200");
-      Intent in = new Intent(Intent.ACTION_VIEW);
-      in.setData(pp);
-      startActivity(in);
+      startService(new Intent(MainActivity.this, MyBubbleService.class));
     } else {
       System.out.println("Match not found");
     }
@@ -118,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
       }
     }
   }
+
 
   public boolean isAccessibilityEnabled() {
     int accessibilityEnabled = 0;
