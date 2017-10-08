@@ -85,8 +85,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Pattern pattern = Pattern.compile("Pay");
     Matcher matcher = pattern.matcher(URL);
     if (matcher.find()) {
-      Toast.makeText(this, "Found", Toast.LENGTH_SHORT).show();
-      startService(new Intent(MainActivity.this, MyBubbleService.class));
+      Pattern zipPattern = Pattern.compile("(\\d{4})");
+      Matcher zipMatcher = zipPattern.matcher(URL);
+      if (zipMatcher.find()) {
+        String zip = zipMatcher.group(1);
+        Toast.makeText(this, "Found", Toast.LENGTH_SHORT).show();
+        startService(new Intent(MainActivity.this, MyBubbleService.class));
+      }
     } else {
       System.out.println("Match not found");
     }
