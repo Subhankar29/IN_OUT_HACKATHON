@@ -4,7 +4,10 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.IntDef;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -12,6 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import bpr10.git.voodosample1.MainActivity;
 
@@ -20,6 +24,17 @@ public class MyBubbleService extends Service {
 
     private WindowManager mWindowManager;
     private View mFloatingView;
+
+    private int lol; //0 = PhonePe, 1 = iPhone, 2 = Samsung;
+    private String name;
+    private String amount;
+    private String product;
+    private String phone;
+    private Button firstBtn;
+    private Button secondBtn;
+    private Button cancel;
+    private TextView textView;
+
 
 
     public MyBubbleService() {
@@ -30,11 +45,13 @@ public class MyBubbleService extends Service {
         return null;
     }
 
+
     @Override
     public void onCreate() {
         super.onCreate();
         //Inflate the floating view layout we created
         mFloatingView = LayoutInflater.from(this).inflate(R.layout.bubble_layout, null);
+
 
         //Add the view to the window.
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
@@ -59,6 +76,22 @@ public class MyBubbleService extends Service {
 
         //Set the close button
         ImageView closeButtonCollapsed = (ImageView) mFloatingView.findViewById(R.id.close_btn);
+         firstBtn = (Button) mFloatingView.findViewById(R.id.pay_now_btn);
+         secondBtn = (Button) mFloatingView.findViewById(R.id.pay_later_s);
+         cancel = (Button) mFloatingView.findViewById(R.id.cancel);
+         textView =(TextView)mFloatingView.findViewById(R.id.poped_question);
+
+        if (lol == 0){
+            Log.i("LolValue", "onCreate: "+lol);
+            textView.setText("Would you like to pay "+name+" Rs."+amount+"?");
+        } else if (lol ==1 || lol ==2){
+
+            Log.i("LolValue", "onCreate: "+lol);
+            textView.setText("Would you like to check awesome deals in "+product+" available in Flipkart or Amazon?");
+            firstBtn.setText("Flipkart");
+            secondBtn.setText("Amazon");
+
+        }
         closeButtonCollapsed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,50 +102,57 @@ public class MyBubbleService extends Service {
 
         //Set the view while floating view is expanded.
         //Set the play button.
-        Button payNow = (Button) mFloatingView.findViewById(R.id.pay_now_btn);
-        if (MainActivity.lol == 1) {
-            payNow.setOnClickListener(new View.OnClickListener() {
+        if (MainActivity.lol == 1 || MainActivity.lol ==2) {
+
+            firstBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Uri uriUrl = Uri.parse("https://www.flipkart.com/search?q=iphone%20&otracker=start&as-show=on&as=off");
+                    Uri uriUrl = Uri.parse("https://www.flipkart.com/search?q="+product);
                     Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
                     launchBrowser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(launchBrowser);
+                    stopSelf();
+
                 }
             });
-        }else if (MainActivity.lol == 2){
-            payNow.setOnClickListener(new View.OnClickListener() {
+            secondBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Uri uriUrl = Uri.parse("https://www.amazon.in/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=samsung&rh=i%3Aaps%2Ck%3A"+product);
+                    Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                    launchBrowser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(launchBrowser);
+                    stopSelf();
+
+                }
+            });
+
+        }else if (MainActivity.lol == 0){
+            firstBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(MyBubbleService.this, "NICE ", Toast.LENGTH_LONG).show();
                     //TODO MAKE it TO PAYMENT PAGE
                     //Enter the payment method here..
-                    Uri pp = Uri.parse("phonepe://pay?pmo=+9163506800&pn=Anand&am=200");
+                    Uri pp = Uri.parse("phonepe://pay?pmo="+phone+"&pn="+name+"&am="+amount);
                     Intent in = new Intent(Intent.ACTION_VIEW);
                     in.setData(pp);
                     in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(in);
                 }
             });
+            //Set the next button.
+            secondBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MyBubbleService.this, "Cool! No worries.", Toast.LENGTH_LONG).show();
+                    //// TODO: 08/10/17 Make things to Notification
+                }
+            });
         }
 
-
-
-
-        //Set the next button.
-        Button nextButton = (Button) mFloatingView.findViewById(R.id.pay_later_s);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MyBubbleService.this, "Cool! No worries.", Toast.LENGTH_LONG).show();
-                //// TODO: 08/10/17 Make things to Notification
-            }
-        });
-
-
         //Set the pause button.
-        Button prevButton = (Button) mFloatingView.findViewById(R.id.cancel);
-        prevButton.setOnClickListener(new View.OnClickListener() {
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 stopSelf();
@@ -209,6 +249,33 @@ public class MyBubbleService extends Service {
         return mFloatingView == null || mFloatingView.findViewById(R.id.collapse_view).getVisibility() == View.VISIBLE;
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+//        super.onStartCommand(intent,flags,startId);
+        Bundle extras= intent.getExtras();
+
+        if(extras == null) {
+            Log.d("Service","null");
+        } else {
+            Log.d("Service","not null");
+            lol = extras.getInt("lol");
+            if (lol==0){
+                name = extras.getString("name");
+                amount = extras.getString("amount");
+                phone = extras.getString("phone");
+
+            }
+            else{
+                product = extras.getString("product");
+                firstBtn.setText("Flipkart");
+                secondBtn.setText("Amazon");
+            }
+
+
+        }
+
+        return START_STICKY;
+    }
 
     @Override
     public void onDestroy() {

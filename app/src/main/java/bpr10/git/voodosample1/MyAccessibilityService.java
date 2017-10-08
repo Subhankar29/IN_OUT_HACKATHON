@@ -2,14 +2,25 @@ package bpr10.git.voodosample1;
 
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
+import android.app.Service;
 import android.content.ComponentName;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.support.annotation.IntDef;
+import android.text.Editable;
 import android.util.Log;
+import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MyAccessibilityService extends AccessibilityService {
   private static final String LOG_TAG = MyAccessibilityService.class.getSimpleName();
@@ -33,7 +44,7 @@ public class MyAccessibilityService extends AccessibilityService {
     this.setServiceInfo(info);
   }
 
-  private void populateActivitesTotrack() {
+    private void populateActivitesTotrack() {
     packages = new ArrayList<>();
     packages.add("net.one97.paytm/.auth.activity.AJRAuthActivity");
     packages.add("com.flipkart.android/.activity.MLoginActivity");

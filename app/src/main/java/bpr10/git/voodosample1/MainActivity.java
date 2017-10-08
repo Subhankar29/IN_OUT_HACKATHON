@@ -37,10 +37,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   AppCompatCheckBox checkBox;
   public static int lol;
   private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
+    private static int count_pay =0;
+    private static int count_sam =0;
+    private static int count_iphone =0;
 
   Toast toast;
+    private String product;
+    private String amount;
 
-  @Override
+    @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
@@ -58,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ViewCompat.setImportantForAccessibility(editText, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO);
     ViewCompat.setImportantForAccessibility(txtLogs, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO);
     BusProvider.UI_BUS.register(this);
-
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
       //If the draw over permission is not available open the settings screen
@@ -81,17 +85,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ((Editable) txtLogs.getText()).insert(txtLogs.getText().length(), event.text);
     rootScroll.fullScroll(View.FOCUS_DOWN);
 
-
     String URL = txtLogs.getText().toString();
     Pattern pattern = Pattern.compile("Pay");
     Matcher matcher = pattern.matcher(URL);
-    if (matcher.find()) {
+    if (matcher.find() && count_pay ==0) {
+        count_pay =0;
       Pattern zipPattern = Pattern.compile("(\\d{3})");
       Matcher zipMatcher = zipPattern.matcher(URL);
       if (zipMatcher.find()) {
-        String zip = zipMatcher.group(1);
-        Toast.makeText(this, "Found", Toast.LENGTH_SHORT).show();
-        startService(new Intent(MainActivity.this, MyBubbleService.class));
+         amount = zipMatcher.group(1);
+      lol=0;
+          callIntent();
       }
     } Pattern mob = Pattern.compile("iphone");
       Pattern mob1 = Pattern.compile("samsung");
@@ -100,12 +104,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     if(mobMacher.find()){
       //Search for Iphone
       lol = 1;
-      startService(new Intent(MainActivity.this, MyBubbleService.class));
+        product = "iphone";
+        callIntent();
 
     }else if(mob1Macher.find()){
       //Search For Android Phone
       lol = 2;
-      startService(new Intent(MainActivity.this, MyBubbleService.class));
+        product = "samsung";
+        callIntent();
     }
 
 
@@ -142,6 +148,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
   }
 
+  public void callIntent(){
+      Intent intent = new Intent(MainActivity.this, MyBubbleService.class);
+      intent.putExtra("lol",lol);
+      intent.putExtra("product",product);
+      intent.putExtra("amount",amount);
+      intent.putExtra("phone","+919163506800");
+      intent.putExtra("name","Anand");
+
+      startService(intent);
+
+  }
 
   public boolean isAccessibilityEnabled() {
     int accessibilityEnabled = 0;
