@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+import bpr10.git.voodosample1.MainActivity;
 
 
 public class MyBubbleService extends Service {
@@ -69,18 +70,33 @@ public class MyBubbleService extends Service {
         //Set the view while floating view is expanded.
         //Set the play button.
         Button payNow = (Button) mFloatingView.findViewById(R.id.pay_now_btn);
-        payNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MyBubbleService.this, "NICE ", Toast.LENGTH_LONG).show();
-                //TODO MAKE it TO PAYMENT PAGE
-                //Enter the payment method here..
-                Uri pp = Uri.parse("phonepe://pay?pmo=+9163506800&pn=Anand&am=200");
-                Intent in = new Intent(Intent.ACTION_VIEW);
-                in.setData(pp);
-                startActivity(in);
-            }
-        });
+        if (MainActivity.lol == 1) {
+            payNow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Uri uriUrl = Uri.parse("https://www.flipkart.com/search?q=iphone%20&otracker=start&as-show=on&as=off");
+                    Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                    launchBrowser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(launchBrowser);
+                }
+            });
+        }else if (MainActivity.lol == 2){
+            payNow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MyBubbleService.this, "NICE ", Toast.LENGTH_LONG).show();
+                    //TODO MAKE it TO PAYMENT PAGE
+                    //Enter the payment method here..
+                    Uri pp = Uri.parse("phonepe://pay?pmo=+9163506800&pn=Anand&am=200");
+                    Intent in = new Intent(Intent.ACTION_VIEW);
+                    in.setData(pp);
+                    in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(in);
+                }
+            });
+        }
+
+
 
 
         //Set the next button.

@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   TextView txtLogs;
   ScrollView rootScroll;
   AppCompatCheckBox checkBox;
+  public static int lol;
   private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
 
   Toast toast;
@@ -85,15 +86,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Pattern pattern = Pattern.compile("Pay");
     Matcher matcher = pattern.matcher(URL);
     if (matcher.find()) {
-      Pattern zipPattern = Pattern.compile("(\\d{4})");
+      Pattern zipPattern = Pattern.compile("(\\d{3})");
       Matcher zipMatcher = zipPattern.matcher(URL);
       if (zipMatcher.find()) {
         String zip = zipMatcher.group(1);
         Toast.makeText(this, "Found", Toast.LENGTH_SHORT).show();
         startService(new Intent(MainActivity.this, MyBubbleService.class));
       }
-    } else {
-      System.out.println("Match not found");
+    } Pattern mob = Pattern.compile("iphone");
+      Pattern mob1 = Pattern.compile("samsung");
+     Matcher mobMacher = mob.matcher(URL);
+     Matcher mob1Macher = mob1.matcher(URL);
+    if(mobMacher.find()){
+      //Search for Iphone
+      lol = 1;
+      startService(new Intent(MainActivity.this, MyBubbleService.class));
+
+    }else if(mob1Macher.find()){
+      //Search For Android Phone
+      lol = 2;
+      startService(new Intent(MainActivity.this, MyBubbleService.class));
     }
 
 
