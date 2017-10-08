@@ -3,6 +3,7 @@ package bpr10.git.voodosample1;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.view.ViewCompat;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   TextView txtLogs;
   ScrollView rootScroll;
   AppCompatCheckBox checkBox;
+  private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
 
   Toast toast;
 
@@ -54,9 +56,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // this hides view from accessibility
     ViewCompat.setImportantForAccessibility(editText, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO);
     ViewCompat.setImportantForAccessibility(txtLogs, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO);
-
-
     BusProvider.UI_BUS.register(this);
+
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+      //If the draw over permission is not available open the settings screen
+      //to grant the permission.
+      Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+              Uri.parse("package:" + getPackageName()));
+      startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
+    }
   }
 
   @Override
@@ -76,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Pattern pattern = Pattern.compile("Pay");
     Matcher matcher = pattern.matcher(URL);
     if (matcher.find()) {
+      Toast.makeText(this, "Found", Toast.LENGTH_SHORT).show();
       startService(new Intent(MainActivity.this, MyBubbleService.class));
     } else {
       System.out.println("Match not found");

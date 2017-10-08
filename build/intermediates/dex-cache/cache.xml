@@ -2,22 +2,49 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="/Users/anandsoni/Desktop/IN_OUT_HACKATHON/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/Subhankar29/.android/build-cache/0fb0eb3ad9a678aebc0e5dc2d297d01325d221e3/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.0"
-        sha1="7f33756d2eaf24072125fdcdf864ac99aaf1678f">
-        <dex dex="/Users/anandsoni/Desktop/IN_OUT_HACKATHON/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_d035eef322a26919da21d0fefba946f798e28746/classes.dex" />
+        sha1="39ae02ce40c3ac828abbf780ce0ff5d7a28b7d6a">
+        <dex dex="/Users/Subhankar29/Desktop/IN_OUT_HACKATHON/app/build/intermediates/pre-dexed/debug/classes_4a3609ffbe4eccf0e1e0dca85ea6def86e2965f7.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/anandsoni/Desktop/IN_OUT_HACKATHON/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/Subhankar29/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.0"
-        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="/Users/anandsoni/Desktop/IN_OUT_HACKATHON/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_50a9759fc037907e201154eb184c10339898cde4/classes.dex" />
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="/Users/Subhankar29/Desktop/IN_OUT_HACKATHON/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1_bee985f9e6a4292430e8144236e88312a8e04d6f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Subhankar29/.android/build-cache/3234103791da6521623619e08ef637e7f393a1f1/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="/Users/Subhankar29/Desktop/IN_OUT_HACKATHON/app/build/intermediates/pre-dexed/debug/classes_1e764e86df8e49b979cab201705f066f3c5117bf.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Subhankar29/.android/build-cache/9c912ea42e175223164192587c0cc8d7301fe78c/output/jars/libs/internal_impl-23.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="/Users/Subhankar29/Desktop/IN_OUT_HACKATHON/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1_f7d3c62b316a2404d1d873b1d4808de7ecbe4efd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Subhankar29/.android/build-cache/9c912ea42e175223164192587c0cc8d7301fe78c/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="/Users/Subhankar29/Desktop/IN_OUT_HACKATHON/app/build/intermediates/pre-dexed/debug/classes_2bb5173928c60ffe0df561de73d2a38b652edb5d.jar" />
     </item>
 
 </items>
