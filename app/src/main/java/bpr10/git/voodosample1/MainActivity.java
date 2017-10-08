@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   Toast toast;
     private String product;
     private String amount;
+    private String phone;
+    private String name;
+
 
     @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -153,8 +156,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
       intent.putExtra("lol",lol);
       intent.putExtra("product",product);
       intent.putExtra("amount",amount);
-      intent.putExtra("phone","+919163506800");
-      intent.putExtra("name","Anand");
+      intent.putExtra("phone",phone);
+      intent.putExtra("name",name);
 
       startService(intent);
 

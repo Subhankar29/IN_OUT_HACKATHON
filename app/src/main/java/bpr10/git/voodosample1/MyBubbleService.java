@@ -134,7 +134,7 @@ public class MyBubbleService extends Service {
                     Toast.makeText(MyBubbleService.this, "NICE ", Toast.LENGTH_LONG).show();
                     //TODO MAKE it TO PAYMENT PAGE
                     //Enter the payment method here..
-                    Uri pp = Uri.parse("phonepe://pay?pmo="+phone+"&pn="+name+"&am="+amount);
+                    Uri pp = Uri.parse("phonepe://pay?mo="+phone+"&pn="+name+"&am="+amount);
                     Intent in = new Intent(Intent.ACTION_VIEW);
                     in.setData(pp);
                     in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
